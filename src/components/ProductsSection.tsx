@@ -3,63 +3,60 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Updated helper function
-const getImagePath = (imagePath) => {
-  // Remove 'public/' prefix if it exists
-  if (imagePath.startsWith("public/")) {
-    imagePath = imagePath.substring(7);
-  }
-  
-  // In case the path starts with a slash, remove it
-  if (imagePath.startsWith("/")) {
-    imagePath = imagePath.substring(1);
-  }
-  
-  // For Netlify, we need to make sure we're not adding /public in the URL
-  return `/${imagePath}`;
-};
-
-// Updated product data - removed "public/" from the paths
+// Updated product data
 export const products = [
   {
     title: "Live BSFL",
     description: "Fresh larvae ideal for reptiles, birds, and fish",
     benefits: ["High protein content", "Rich in essential nutrients", "Highly digestible"],
-    image: "lovable-uploads/Live_BSFL.webp"
+    image: "public/lovable-uploads/Live_BSFL.webp" // Original path kept for reference
   },
   {
     title: "Whole Dried BSFL",
     description: "Sun-dried larvae suitable for chickens, fishes, and pets",
     benefits: ["Long shelf life", "Easy to store", "Concentrated nutrition"],
-    image: "lovable-uploads/Dried_BSFL.webp"
+    image: "public/lovable-uploads/Dried_BSFL.webp"
   },
   {
     title: "BSFL Oil",
     description: "Nutrient-rich oil extracted from Black Soldier Fly larvae.",
     benefits: ["Rich nutrition", "Versatile use", "Sustainable source"],
-    image: "lovable-uploads/BSFL_Oil.webp"
+    image: "public/lovable-uploads/BSFL_Oil.webp"
   },
   {
     title: "Puffed BSFL",
     description: "Crispy larvae snacks for pet birds, reptiles, and fancy fishes",
     benefits: ["Highly palatable", "Lightweight", "Perfect for treats"],
-    image: "lovable-uploads/Puffed_BSFL.webp"
+    image: "public/lovable-uploads/Puffed_BSFL.webp"
   },
   {
     title: "BSFL Pellets",
     description: "Broken dried larvae for chicks and small birds",
     benefits: ["Easy to consume", "No waste", "Ideal for small species"],
-    image: "lovable-uploads/BSFL_Pellet.webp"
+    image: "public/lovable-uploads/BSFL_Pellet.webp"
   },
   {
     title: "BSFL Meal",
     description: "Defatted larvae powder as a protein-rich feed ingredient",
     benefits: ["Consistent quality", "Easily mixed", "High protein concentration"],
-    image: "lovable-uploads/BSFL_Meal.webp"
+    image: "public/lovable-uploads/BSFL_Meal.webp"
   }
 ];
 
+// Helper function to get correct path for Netlify
+const getNetlifyImagePath = (imagePath) => {
+  // Extract the filename part
+  const filename = imagePath.split('/').pop();
+  // Use the correct Netlify dist path
+  return `/dist/lovable-uploads/${filename}`;
+};
+
 const ProductsSection = () => {
+  // Detect if we're running on Netlify
+  const isNetlify = () => {
+    return window.location.hostname.includes('netlify.app');
+  };
+  
   return (
     <section id="products" className="py-20 bg-accent">
       <div className="container mx-auto px-4">
@@ -68,7 +65,15 @@ const ProductsSection = () => {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {products.map((product, index) => {
-            const imagePath = getImagePath(product.image);
+            // Determine image path based on environment
+            let imagePath;
+            if (isNetlify()) {
+              // Use the Netlify-specific path with dist folder
+              imagePath = getNetlifyImagePath(product.image);
+            } else {
+              // For local development
+              imagePath = product.image.replace('public/', '/');
+            }
             
             return (
               <Card key={index} className="hover:shadow-xl transition-all">
@@ -84,32 +89,38 @@ const ProductsSection = () => {
                           processedPath: imagePath
                         });
                         
-                        // Better fallback logic
-                        if (window.location.hostname === 'localhost') {
-                          // Try with base URL if running locally
-                          const baseUrl = window.location.origin;
-                          console.log("Trying with base URL:", `${baseUrl}${imagePath}`);
-                          e.target.src = `${baseUrl}${imagePath}`;
+                        // Try multiple fallbacks
+                        if (isNetlify()) {
+                          // Try alternative Netlify paths
+                          const filename = product.image.split('/').pop();
                           
-                          // If that fails, try public path
+                          // Try 1: Just the filename in dist folder
+                          console.log("Trying with dist/filename:", `/dist/${filename}`);
+                          e.target.src = `/dist/${filename}`;
+                          
                           e.target.onerror = () => {
-                            console.log("Trying public path:", `/public/${product.image}`);
-                            e.target.src = `/public/${product.image}`;
+                            // Try 2: Without the dist folder
+                            console.log("Trying without dist folder:", `/lovable-uploads/${filename}`);
+                            e.target.src = `/lovable-uploads/${filename}`;
                             
-                            // Finally, use placeholder if all else fails
                             e.target.onerror = () => {
-                              console.log("Using placeholder image");
-                              e.target.src = "/placeholder-image.png";
-                              e.target.onerror = null;
+                              // Try 3: Just the filename at root
+                              console.log("Trying with just filename at root:", `/${filename}`);
+                              e.target.src = `/${filename}`;
+                              
+                              e.target.onerror = () => {
+                                console.log("Using placeholder image");
+                                e.target.src = "/placeholder-image.png";
+                                e.target.onerror = null;
+                              };
                             };
                           };
                         } else {
-                          // On Netlify, first try without the lovable-uploads folder
-                          const filename = product.image.split('/').pop();
-                          console.log("Trying with just filename:", `/${filename}`);
-                          e.target.src = `/${filename}`;
+                          // Local development fallbacks
+                          const localPath = product.image.replace('public/', '/');
+                          console.log("Trying local path:", localPath);
+                          e.target.src = localPath;
                           
-                          // If that fails, use placeholder
                           e.target.onerror = () => {
                             console.log("Using placeholder image");
                             e.target.src = "/placeholder-image.png";
