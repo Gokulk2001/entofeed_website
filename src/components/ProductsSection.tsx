@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-// Updated product data
+// Original product data - don't modify this
 export const products = [
   {
     title: "Live BSFL",
     description: "Fresh larvae ideal for reptiles, birds, and fish",
     benefits: ["High protein content", "Rich in essential nutrients", "Highly digestible"],
-    image: "public/lovable-uploads/Live_BSFL.webp" // Original path kept for reference
+    image: "public/lovable-uploads/Live_BSFL.webp"
   },
   {
     title: "Whole Dried BSFL",
@@ -43,20 +43,67 @@ export const products = [
   }
 ];
 
-// Helper function to get correct path for Netlify
-const getNetlifyImagePath = (imagePath) => {
-  // Extract the filename part
-  const filename = imagePath.split('/').pop();
-  // Use the correct Netlify dist path
-  return `/dist/lovable-uploads/${filename}`;
+// Create a global image URL fix - this needs to be imported early in your app
+export const setupImageFix = () => {
+  if (typeof window === 'undefined') return; // Skip during SSR
+
+  // Save the original Image constructor
+  const OriginalImage = window.Image;
+
+  // Create a proxy for the Image constructor
+  window.Image = function() {
+    // Create a normal image object
+    const img = new OriginalImage(...arguments);
+    
+    // Override the src setter
+    const originalSrcSetter = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src').set;
+    
+    Object.defineProperty(img, 'src', {
+      set: function(url) {
+        // Fix the URL if it contains problematic paths
+        let newUrl = url;
+        
+        // Check if it's a Netlify deployment
+        const isNetlify = window.location.hostname.includes('netlify.app');
+        
+        if (isNetlify && url) {
+          // Handle images with public/lovable-uploads path
+          if (url.includes('/public/lovable-uploads/')) {
+            // Extract filename
+            const filename = url.split('/').pop();
+            // Use dist path
+            newUrl = `/dist/lovable-uploads/${filename}`;
+            console.log(`Image URL fixed from ${url} to ${newUrl}`);
+          }
+        }
+        
+        // Call the original setter with our potentially fixed URL
+        originalSrcSetter.call(this, newUrl);
+      },
+      get: Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src').get
+    });
+    
+    return img;
+  };
+  
+  // Copy properties from original Image constructor
+  for (const prop in OriginalImage) {
+    if (OriginalImage.hasOwnProperty(prop)) {
+      window.Image[prop] = OriginalImage[prop];
+    }
+  }
+  
+  window.Image.prototype = OriginalImage.prototype;
+  
+  console.log('Global image path fix installed');
 };
 
 const ProductsSection = () => {
-  // Detect if we're running on Netlify
-  const isNetlify = () => {
-    return window.location.hostname.includes('netlify.app');
-  };
-  
+  useEffect(() => {
+    // Apply the global image fix
+    setupImageFix();
+  }, []);
+
   return (
     <section id="products" className="py-20 bg-accent">
       <div className="container mx-auto px-4">
@@ -65,15 +112,12 @@ const ProductsSection = () => {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {products.map((product, index) => {
-            // Determine image path based on environment
-            let imagePath;
-            if (isNetlify()) {
-              // Use the Netlify-specific path with dist folder
-              imagePath = getNetlifyImagePath(product.image);
-            } else {
-              // For local development
-              imagePath = product.image.replace('public/', '/');
-            }
+            // Extract just the filename
+            const filename = product.image.split('/').pop();
+            // Use the correct path for the current environment
+            const imagePath = window.location.hostname.includes('netlify.app') 
+              ? `/dist/lovable-uploads/${filename}`
+              : `/${product.image.replace('public/', '')}`;
             
             return (
               <Card key={index} className="hover:shadow-xl transition-all">
@@ -89,44 +133,9 @@ const ProductsSection = () => {
                           processedPath: imagePath
                         });
                         
-                        // Try multiple fallbacks
-                        if (isNetlify()) {
-                          // Try alternative Netlify paths
-                          const filename = product.image.split('/').pop();
-                          
-                          // Try 1: Just the filename in dist folder
-                          console.log("Trying with dist/filename:", `/dist/${filename}`);
-                          e.target.src = `/dist/${filename}`;
-                          
-                          e.target.onerror = () => {
-                            // Try 2: Without the dist folder
-                            console.log("Trying without dist folder:", `/lovable-uploads/${filename}`);
-                            e.target.src = `/lovable-uploads/${filename}`;
-                            
-                            e.target.onerror = () => {
-                              // Try 3: Just the filename at root
-                              console.log("Trying with just filename at root:", `/${filename}`);
-                              e.target.src = `/${filename}`;
-                              
-                              e.target.onerror = () => {
-                                console.log("Using placeholder image");
-                                e.target.src = "/placeholder-image.png";
-                                e.target.onerror = null;
-                              };
-                            };
-                          };
-                        } else {
-                          // Local development fallbacks
-                          const localPath = product.image.replace('public/', '/');
-                          console.log("Trying local path:", localPath);
-                          e.target.src = localPath;
-                          
-                          e.target.onerror = () => {
-                            console.log("Using placeholder image");
-                            e.target.src = "/placeholder-image.png";
-                            e.target.onerror = null;
-                          };
-                        }
+                        // Fallback to placeholder if image doesn't load
+                        e.target.src = "/placeholder-image.png";
+                        e.target.onerror = null;
                       }}
                     />
                   </div>
