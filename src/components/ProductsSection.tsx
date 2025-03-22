@@ -3,12 +3,28 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Helper function to handle image path
+const getImagePath = (imagePath) => {
+  // Remove 'public/' prefix if it exists
+  if (imagePath.startsWith("public/")) {
+    imagePath = imagePath.substring(7);
+  }
+  
+  // In case the path starts with a slash, remove it
+  if (imagePath.startsWith("/")) {
+    imagePath = imagePath.substring(1);
+  }
+  
+  // Add a leading slash to ensure it resolves from the root
+  return `/${imagePath}`;
+};
+
 export const products = [
   {
     title: "Live BSFL",
     description: "Fresh larvae ideal for reptiles, birds, and fish",
     benefits: ["High protein content", "Rich in essential nutrients", "Highly digestible"],
-    image: "/lovable-uploads/Live_BSFL.webp"
+    image: "public/lovable-uploads/Live_BSFL.webp"
   },
   {
     title: "Whole Dried BSFL",
@@ -54,9 +70,14 @@ const ProductsSection = () => {
             <Card key={index} className="hover:shadow-xl transition-all">
               <CardHeader>
                 <img 
-                  src={product.image} 
+                  src={getImagePath(product.image)} 
                   alt={product.title} 
                   className="w-full h-48 object-cover rounded-md mb-4"
+                  onError={(e) => {
+                    console.error("Image failed to load:", product.image);
+                    e.target.src = "/placeholder-image.png"; // Fallback to a placeholder
+                    e.target.onerror = null; // Prevent infinite error loop
+                  }}
                 />
                 <CardTitle>{product.title}</CardTitle>
                 <CardDescription>{product.description}</CardDescription>
