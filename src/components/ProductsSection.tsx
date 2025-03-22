@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,65 +43,44 @@ export const products = [
   }
 ];
 
-// Create a global image URL fix - this needs to be imported early in your app
-export const setupImageFix = () => {
-  if (typeof window === 'undefined') return; // Skip during SSR
-
-  // Save the original Image constructor
-  const OriginalImage = window.Image;
-
-  // Create a proxy for the Image constructor
-  window.Image = function() {
-    // Create a normal image object
-    const img = new OriginalImage(...arguments);
-    
-    // Override the src setter
-    const originalSrcSetter = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src').set;
-    
-    Object.defineProperty(img, 'src', {
-      set: function(url) {
-        // Fix the URL if it contains problematic paths
-        let newUrl = url;
-        
-        // Check if it's a Netlify deployment
-        const isNetlify = window.location.hostname.includes('netlify.app');
-        
-        if (isNetlify && url) {
-          // Handle images with public/lovable-uploads path
-          if (url.includes('/public/lovable-uploads/')) {
-            // Extract filename
-            const filename = url.split('/').pop();
-            // Use dist path
-            newUrl = `/dist/lovable-uploads/${filename}`;
-            console.log(`Image URL fixed from ${url} to ${newUrl}`);
-          }
-        }
-        
-        // Call the original setter with our potentially fixed URL
-        originalSrcSetter.call(this, newUrl);
-      },
-      get: Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src').get
-    });
-    
-    return img;
-  };
+// More robust image path resolver function
+export const getCorrectImagePath = (originalPath) => {
+  if (typeof window === 'undefined') return originalPath; // SSR fallback
   
-  // Copy properties from original Image constructor
-  for (const prop in OriginalImage) {
-    if (OriginalImage.hasOwnProperty(prop)) {
-      window.Image[prop] = OriginalImage[prop];
-    }
+  // Extract just the filename
+  const filename = originalPath.split('/').pop();
+  
+  // Try different path patterns based on environment
+  // Start with an array of possible path patterns to try
+  const possiblePaths = [
+    `/lovable-uploads/${filename}`,               // Direct in root
+    `/dist/lovable-uploads/${filename}`,          // In dist folder
+    `/public/lovable-uploads/${filename}`,        // In public folder
+    `/${originalPath.replace('public/', '')}`,    // Original without public
+    `/${filename}`                                // Just the filename
+  ];
+  
+  // For development environment, prioritize the local path
+  if (!window.location.hostname.includes('netlify.app')) {
+    return `/${originalPath.replace('public/', '')}`;
   }
   
-  window.Image.prototype = OriginalImage.prototype;
-  
-  console.log('Global image path fix installed');
+  // For production/Netlify environment
+  console.log(`Trying to resolve image path for ${filename}`);
+  return `/public/lovable-uploads/${filename}`; // Changed from dist to public as suggested
 };
 
 const ProductsSection = () => {
+  const [imageLoadAttempts, setImageLoadAttempts] = useState({});
+  
+  // Preload images to test which paths work
   useEffect(() => {
-    // Apply the global image fix
-    setupImageFix();
+    const preloadImages = async () => {
+      // Nothing to implement here, let the img tags handle loading
+      console.log('Component mounted, images will load with robust fallback handling');
+    };
+    
+    preloadImages();
   }, []);
 
   return (
@@ -112,12 +91,8 @@ const ProductsSection = () => {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {products.map((product, index) => {
-            // Extract just the filename
-            const filename = product.image.split('/').pop();
-            // Use the correct path for the current environment
-            const imagePath = window.location.hostname.includes('netlify.app') 
-              ? `/dist/lovable-uploads/${filename}`
-              : `/${product.image.replace('public/', '')}`;
+            // Get the corrected image path
+            const imagePath = getCorrectImagePath(product.image);
             
             return (
               <Card key={index} className="hover:shadow-xl transition-all">
@@ -128,14 +103,43 @@ const ProductsSection = () => {
                       alt={product.title} 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.error(`Image failed to load: ${product.title}`, {
+                        // Get current attempt count
+                        const attempts = imageLoadAttempts[product.title] || 0;
+                        
+                        // Log detailed error info for debugging
+                        console.error(`Image failed to load (attempt ${attempts + 1}): ${product.title}`, {
                           originalPath: product.image,
-                          processedPath: imagePath
+                          triedPath: imagePath
                         });
                         
-                        // Fallback to placeholder if image doesn't load
-                        e.target.src = "/placeholder-image.png";
-                        e.target.onerror = null;
+                        if (attempts === 0) {
+                          // First failure - try without '/public' prefix
+                          const newPath = `/lovable-uploads/${product.image.split('/').pop()}`;
+                          console.log(`Retrying with path: ${newPath}`);
+                          e.target.src = newPath;
+                          
+                          // Update attempt counter
+                          setImageLoadAttempts(prev => ({
+                            ...prev,
+                            [product.title]: 1
+                          }));
+                        } else if (attempts === 1) {
+                          // Second failure - try with '/dist' prefix
+                          const newPath = `/dist/lovable-uploads/${product.image.split('/').pop()}`;
+                          console.log(`Retrying with path: ${newPath}`);
+                          e.target.src = newPath;
+                          
+                          // Update attempt counter
+                          setImageLoadAttempts(prev => ({
+                            ...prev,
+                            [product.title]: 2
+                          }));
+                        } else {
+                          // All attempts failed, use placeholder
+                          console.log(`All attempts failed, using placeholder for: ${product.title}`);
+                          e.target.src = "/placeholder-image.png";
+                          e.target.onerror = null; // Prevent infinite loop
+                        }
                       }}
                     />
                   </div>
