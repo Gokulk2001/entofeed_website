@@ -8,7 +8,7 @@ export const products = [
     title: "Live BSFL",
     description: "Fresh larvae ideal for reptiles, birds, and fish",
     benefits: ["High protein content", "Rich in essential nutrients", "Highly digestible"],
-    image: "public/lovable-uploads/Live_BSFL.webp"
+    image: "/lovable-uploads/Live_BSFL.webp"
   },
   {
     title: "Whole Dried BSFL",
