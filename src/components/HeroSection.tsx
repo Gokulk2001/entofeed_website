@@ -48,7 +48,7 @@ export const HeroSection = () => {
               We produce high-quality Black Soldier Fly Larvae as a sustainable protein 
               source, reducing environmental impact.
             </p>
-            <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 mt-20 md:mt-0 transition-all duration-700 delay-500 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+            <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 mt-40 md:mt-0 transition-all duration-700 delay-500 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
               <a href="#about">
                 <Button size="lg">
                   Learn More
