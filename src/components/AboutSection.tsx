@@ -1,12 +1,10 @@
-
 import React from "react";
-
 export const AboutSection = () => {
   return (
     <section id="about" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="order-2 md:order-1">
             <h2 className="text-4xl font-bold text-primary-dark mb-6">
               About Our Insect Farm
             </h2>
@@ -25,7 +23,7 @@ export const AboutSection = () => {
               in the food production system and contributing to a more sustainable future.
             </p>
           </div>
-          <div className="rounded-lg overflow-hidden shadow-xl">
+          <div className="rounded-lg overflow-hidden shadow-xl order-1 md:order-2">
             <img 
               src="/lovable-uploads/a3f92e64-fa3d-425b-af18-889aa2d3e096.png" 
               alt="Black Soldier Fly Larvae" 
