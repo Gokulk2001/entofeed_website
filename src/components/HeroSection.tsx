@@ -3,18 +3,34 @@ import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
     // Trigger animations after initial render
     setIsLoaded(true);
+    
+    // Check if mobile on initial load
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Set initial state
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
   return (
     <section 
       id="hero" 
-      className="py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-center"
+      className="py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-no-repeat"
       style={{
-        backgroundImage: 'url("/lovable-uploads/black_soldier_fly.png")'
+        backgroundImage: 'url("/lovable-uploads/black_soldier_fly.png")',
+        backgroundPosition: isMobile ? 'calc(50% - 50px) center' : 'center center'
       }}
     >
       <div className="container mx-auto px-4 flex flex-col justify-between h-full md:block">
@@ -32,7 +48,7 @@ export const HeroSection = () => {
               We produce high-quality Black Soldier Fly Larvae as a sustainable protein 
               source, reducing environmental impact.
             </p>
-            <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 transition-all duration-700 delay-500 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+            <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 mt-5 md:mt-0 transition-all duration-700 delay-500 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
               <a href="#about">
                 <Button size="lg">
                   Learn More
