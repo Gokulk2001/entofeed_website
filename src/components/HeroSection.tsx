@@ -12,20 +12,22 @@ export const HeroSection = () => {
   return (
     <section 
       id="hero" 
-      className="py-20 flex items-center min-h-screen bg-cover bg-center"
+      className="py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-center"
       style={{
         backgroundImage: 'url("/lovable-uploads/black_soldier_fly.png")'
       }}
     >
-      <div className="container mx-auto px-4">
-        <div className={`max-w-xl md:max-w-2xl transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Heading moved up on mobile */}
-          <h1 className={`text-4xl md:text-5xl font-bold text-black mb-6 mt-0 md:mt-0 transition-all duration-700 ${isLoaded ? 'animate-fade-down' : 'opacity-0 -translate-y-4'}`}>
-            Sustainable Insect Protein for Animal Feed
-          </h1>
+      <div className="container mx-auto px-4 flex flex-col justify-between h-full md:block">
+        <div className={`max-w-xl md:max-w-2xl transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} flex flex-col justify-between h-full md:h-auto`}>
+          {/* Heading at the top with minimal padding */}
+          <div className="pt-4 md:pt-0">
+            <h1 className={`text-4xl md:text-5xl font-bold text-black mb-6 md:mb-6 transition-all duration-700 ${isLoaded ? 'animate-fade-down' : 'opacity-0 -translate-y-4'}`}>
+              Sustainable Insect Protein for Animal Feed
+            </h1>
+          </div>
           
-          {/* Extra spacing for mobile view to move content down past the fly's face */}
-          <div className="mt-16 sm:mt-0">
+          {/* Secondary content and buttons at the bottom */}
+          <div className="mb-8 md:mb-0 md:mt-0">
             <p className={`text-lg md:text-xl text-black mb-8 max-w-md md:max-w-lg transition-all duration-700 delay-300 ${isLoaded ? 'animate-fade-up' : 'opacity-0 translate-y-4'}`}>
               We produce high-quality Black Soldier Fly Larvae as a sustainable protein 
               source, reducing environmental impact.
