@@ -50,12 +50,12 @@ export const HeroSection = () => {
             </p>
             <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 mt-40 md:mt-0 transition-all duration-700 delay-500 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
               <a href="#about">
-                <Button size="lg">
-                  Learn More
+                <Button size="lg" className="text-white">
+                  Our Products
                 </Button>
               </a>
               <a href="#contact">
-                <Button size="lg">
+                <Button size="lg" className="text-white">
                   Contact Us
                 </Button>
               </a>
