@@ -21,8 +21,7 @@ const Footer = () => {
             <p className="text-white/70 leading-relaxed">
               Transforming waste into<br />
               sustainable protein solutions<br />
-              for a better<br />
-              future.
+              for a better future.
             </p>
           </div>
           
