@@ -25,7 +25,7 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-white/70 hover:text-white transition-colors">Home</a></li>
+              <li><a href="/" className="text-white/70 hover:text-white transition-colors">Home</a></li>
               <li><a href="#about" className="text-white/70 hover:text-white transition-colors">About</a></li>
               <li><a href="#products" className="text-white/70 hover:text-white transition-colors">Products</a></li>
               <li><a href="#blog" className="text-white/70 hover:text-white transition-colors">Blog</a></li>
@@ -36,11 +36,11 @@ const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Products</h3>
             <ul className="space-y-2">
-              <li><a href="https://entofeedindia.in/product/0" className="text-white/70 hover:text-white transition-colors">Live BSFL</a></li>
-              <li><a href="https://entofeedindia.in/product/1" className="text-white/70 hover:text-white transition-colors">Dried BSFL</a></li>
-              <li><a href="https://entofeedindia.in/product/5" className="text-white/70 hover:text-white transition-colors">BSFL Meal</a></li>
-              <li><a href="https://entofeedindia.in/product/2" className="text-white/70 hover:text-white transition-colors">BSFL Oil</a></li>
-              <li><a href="https://entofeedindia.in/product/3" className="text-white/70 hover:text-white transition-colors">Puffed BSFL</a></li>
+              <li><a href="/product/0" className="text-white/70 hover:text-white transition-colors">Live BSFL</a></li>
+              <li><a href="/product/1" className="text-white/70 hover:text-white transition-colors">Dried BSFL</a></li>
+              <li><a href="/product/5" className="text-white/70 hover:text-white transition-colors">BSFL Meal</a></li>
+              <li><a href="/product/2" className="text-white/70 hover:text-white transition-colors">BSFL Oil</a></li>
+              <li><a href="/product/3" className="text-white/70 hover:text-white transition-colors">Puffed BSFL</a></li>
             </ul>
           </div>
         </div>
