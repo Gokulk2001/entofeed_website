@@ -41,9 +41,10 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="/product/0" className="text-white/70 hover:text-white transition-colors">Live BSFL</a></li>
               <li><a href="/product/1" className="text-white/70 hover:text-white transition-colors">Dried BSFL</a></li>
-              <li><a href="/product/5" className="text-white/70 hover:text-white transition-colors">BSFL Meal</a></li>
               <li><a href="/product/2" className="text-white/70 hover:text-white transition-colors">BSFL Oil</a></li>
               <li><a href="/product/3" className="text-white/70 hover:text-white transition-colors">Puffed BSFL</a></li>
+              <li><a href="/product/4" className="text-white/70 hover:text-white transition-colors">BSFL Pellets</a></li>
+              <li><a href="/product/5" className="text-white/70 hover:text-white transition-colors">BSFL Meal</a></li>
             </ul>
           </div>
           
