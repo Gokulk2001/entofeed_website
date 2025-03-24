@@ -34,6 +34,22 @@ export const Navbar = () => {
     }
   };
 
+  // Navigate to homepage section or handle in-page navigation
+  const navigateToSection = (sectionId) => {
+    setMobileMenuOpen(false);
+    
+    if (location.pathname === '/') {
+      // On homepage, scroll to the section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // On other pages, navigate to homepage with section hash
+      navigate(`/#${sectionId}`);
+    }
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 ${
       scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
@@ -54,12 +70,42 @@ export const Navbar = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#about" className="text-primary-dark hover:text-[#4daf4e] transition-colors">About</a>
-            <a href="#products" className="text-primary-dark hover:text-[#4daf4e] transition-colors">Products</a>
-            <a href="#process" className="text-primary-dark hover:text-[#4daf4e] transition-colors">Process</a>
-            <a href="#benefits" className="text-primary-dark hover:text-[#4daf4e] transition-colors">Benefits</a>
-            <a href="#blog" className="text-primary-dark hover:text-[#4daf4e] transition-colors">Blog</a>
-            <a href="#contact" className="text-primary-dark hover:text-[#4daf4e] transition-colors">Contact</a>
+            <button 
+              onClick={() => navigateToSection('about')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => navigateToSection('products')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              Products
+            </button>
+            <button 
+              onClick={() => navigateToSection('process')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              Process
+            </button>
+            <button 
+              onClick={() => navigateToSection('benefits')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              Benefits
+            </button>
+            <button 
+              onClick={() => navigateToSection('blog')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              Blog
+            </button>
+            <button 
+              onClick={() => navigateToSection('contact')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors"
+            >
+              Contact
+            </button>
           </div>
           
           {/* Mobile Menu Button */}
@@ -77,48 +123,42 @@ export const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white shadow-lg">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <a 
-              href="#about" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            <button 
+              onClick={() => navigateToSection('about')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               About
-            </a>
-            <a 
-              href="#products" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => navigateToSection('products')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               Products
-            </a>
-            <a 
-              href="#process" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => navigateToSection('process')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               Process
-            </a>
-            <a 
-              href="#benefits" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => navigateToSection('benefits')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               Benefits
-            </a>
-            <a 
-              href="#blog" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => navigateToSection('blog')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               Blog
-            </a>
-            <a 
-              href="#contact" 
-              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2"
-              onClick={() => setMobileMenuOpen(false)}
+            </button>
+            <button 
+              onClick={() => navigateToSection('contact')} 
+              className="text-primary-dark hover:text-[#4daf4e] transition-colors py-2 text-left"
             >
               Contact
-            </a>
+            </button>
           </div>
         </div>
       )}
