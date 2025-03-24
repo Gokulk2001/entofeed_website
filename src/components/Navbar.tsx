@@ -18,6 +18,23 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add effect to handle navigation when coming from another page with hash
+  useEffect(() => {
+    // Check if we have a hash in the URL
+    if (location.hash && location.pathname === '/') {
+      // Remove the # character
+      const sectionId = location.hash.substring(1);
+      
+      // Give the DOM time to render
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -46,7 +63,7 @@ export const Navbar = () => {
       }
     } else {
       // On other pages, navigate to homepage with section hash
-      navigate(`/#${sectionId}`);
+      navigate(`/${sectionId !== 'home' ? '#' + sectionId : ''}`);
     }
   };
 
