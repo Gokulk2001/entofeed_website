@@ -1,12 +1,14 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,14 @@ export const Navbar = () => {
     setLogoLoaded(true);
   };
 
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 ${
       scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
@@ -34,8 +44,11 @@ export const Navbar = () => {
             <img 
               src="/lovable-uploads/b8c14063-699d-4483-9744-9ae0a4e9ab85.png" 
               alt="EntoFeed Logo" 
-              className={`h-10 transition-opacity duration-700 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`h-10 transition-opacity duration-700 ${
+                logoLoaded ? 'opacity-100' : 'opacity-0'
+              } cursor-pointer`}
               onLoad={handleLogoLoad}
+              onClick={handleLogoClick}
             />
           </div>
           
