@@ -9,18 +9,33 @@ import { BlogSection } from "@/components/BlogSection";
 import { ContactSection } from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import AnimatedComponent from "@/components/ui/AnimatedComponent";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent to-white">
       <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <ProductsSection />
-      <ProcessSection />
-      <BenefitsSection />
-      <BlogSection />
-      <ContactSection />
+      <AnimatedComponent animation="fade-in">
+        <HeroSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="slide-in-up" delay={100}>
+        <AboutSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="fade-in" delay={200}>
+        <ProductsSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="slide-in-up" delay={100}>
+        <ProcessSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="fade-in" delay={200}>
+        <BenefitsSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="slide-in-up" delay={100}>
+        <BlogSection />
+      </AnimatedComponent>
+      <AnimatedComponent animation="fade-in" delay={200}>
+        <ContactSection />
+      </AnimatedComponent>
       <Footer />
       <Toaster />
     </div>
