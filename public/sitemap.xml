@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://entofeedindia.in/</loc>
+    <lastmod>2025-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!--
+    NOTE: You should add your dynamic product URLs here.
+    For a product-based website, you would typically have a script that
+    automatically generates these URLs by fetching all products from your database.
+
+    Example for a single product:
+    <url>
+      <loc>https://entofeedindia.in/product/123</loc>
+      <lastmod>2025-08-07</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  -->
+</urlset>
