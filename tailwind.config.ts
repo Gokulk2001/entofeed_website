@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
@@ -21,8 +20,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Raleway", "sans-serif"],
-        heading: ["Poppins", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
+        heading: ["Raleway", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
