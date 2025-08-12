@@ -12,7 +12,7 @@ export const AboutSection = () => {
             {/* Image visible only on mobile, placed after heading */}
             <div className="md:hidden rounded-lg overflow-hidden shadow-xl mb-6">
               <img 
-                src="/lovable-uploads/a3f92e64-fa3d-425b-af18-889aa2d3e096.png" 
+                src="/lovable-uploads/Puffed_BSFL.webp"
                 alt="Black Soldier Fly Larvae" 
                 className="w-full h-full object-cover"
               />
@@ -37,7 +37,7 @@ export const AboutSection = () => {
           {/* Image visible only on desktop */}
           <div className="hidden md:block rounded-lg overflow-hidden shadow-xl">
             <img 
-              src="/lovable-uploads/a3f92e64-fa3d-425b-af18-889aa2d3e096.png" 
+              src="/lovable-uploads/Puffed_BSFL.webp"
               alt="Black Soldier Fly Larvae" 
               className="w-full h-full object-cover"
             />
