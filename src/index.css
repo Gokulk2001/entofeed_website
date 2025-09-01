@@ -361,5 +361,8 @@
 }
 
 .hero-background {
-  background-image: url('/lovable-uploads/black_soldier_fly.jpeg');
+  background-image: url('/lovable-uploads/black_soldier_fly.webp');
+  will-change: transform;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
 }
