@@ -29,7 +29,7 @@ export const HeroSection = () => {
       id="hero" 
       className="py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-no-repeat"
       style={{
-        backgroundImage: 'url("/lovable-uploads/black_soldier_fly.png")',
+        backgroundImage: 'url("/lovable-uploads/black_soldier_fly.jpeg")',
         backgroundPosition: isMobile ? 'calc(50% - 50px) center' : 'center center'
       }}
     >
