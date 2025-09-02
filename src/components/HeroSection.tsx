@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-export const HeroSection = () => {
+export const HeroSection = ({ logoHeight }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
@@ -44,7 +44,7 @@ export const HeroSection = () => {
             </p>
           </div>
         </div>
-        <div className="pb-16">
+        <div style={{ paddingBottom: logoHeight ? logoHeight : '4rem' }}>
           <div className={`flex flex-col md:flex-row items-start md:items-center gap-4`}>
             <a href="#about">
               <Button size="lg" className="text-white">
