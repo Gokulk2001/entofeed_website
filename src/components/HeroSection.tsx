@@ -36,14 +36,14 @@ export const HeroSection = () => {
             protein source, reducing environmental impact.
           </p>
 
-          {/* Buttons moved here so alignment is consistent with heading + paragraph */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-12">
-            <a href="#products" className="w-2/3 md:w-auto">
+          {/* Buttons moved further down and resized */}
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mt-[30%]">
+            <a href="#products" className="w-1/2 md:w-auto">
               <Button size="lg" className="px-8 text-white w-full text-center">
                 Our Products
               </Button>
             </a>
-            <a href="#contact" className="w-2/3 md:w-auto">
+            <a href="#contact" className="w-1/2 md:w-auto">
               <Button size="lg" className="px-8 text-white w-full text-center">
                 Contact Us
               </Button>
