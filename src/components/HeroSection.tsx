@@ -27,12 +27,12 @@ export const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="hero-background py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-no-repeat relative"
+      className="hero-background py-6 md:py-20 flex flex-col justify-between md:justify-start min-h-screen bg-cover bg-no-repeat relative"
       style={{
         backgroundPosition: isMobile ? 'calc(50% - 50px) center' : 'center center'
       }}
     >
-      <div className="container mx-auto px-4 flex flex-col justify-center h-full">
+      <div className="container mx-auto px-4 flex flex-col justify-start h-full pt-20">
         <div className={`max-w-xl md:max-w-2xl`}>
           <h1 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-6`}>
             Sustainable Insect Protein for Animal Feed
@@ -43,16 +43,16 @@ export const HeroSection = () => {
           </p>
         </div>
       </div>
-      <div className="absolute bottom-10 left-0 right-0 px-4">
+      <div className="absolute bottom-5 left-0 right-0 px-4">
         <div className="container mx-auto">
           <div className={`flex flex-col md:flex-row items-start md:items-center gap-4`}>
-            <a href="#products" className="w-full md:w-auto">
-              <Button size="lg" className="text-white w-full">
+            <a href="#products" className="w-1/3 md:w-auto">
+              <Button size="lg" className="text-white w-full text-center">
                 Our Products
               </Button>
             </a>
-            <a href="#contact" className="w-full md:w-auto">
-              <Button size="lg" className="text-white w-full">
+            <a href="#contact" className="w-1/3 md:w-auto">
+              <Button size="lg" className="text-white w-full text-center">
                 Contact Us
               </Button>
             </a>
