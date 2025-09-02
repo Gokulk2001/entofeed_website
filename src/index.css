@@ -360,3 +360,8 @@
   }
 }
 
+.hero-background {
+  background-image: url('/lovable-uploads/black_soldier_fly.webp');
+  will-change: transform;
+  background-size: cover;
+}
