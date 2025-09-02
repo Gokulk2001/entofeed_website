@@ -32,15 +32,19 @@ export const HeroSection = () => {
         backgroundPosition: isMobile ? 'calc(50% - 50px) center' : 'center center'
       }}
     >
-      <div className="container mx-auto px-4 flex flex-col justify-center h-full">
-        <div className={`max-w-xl md:max-w-2xl`}>
-          <h1 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-6`}>
-            Sustainable Insect Protein for Animal Feed
-          </h1>
-          <p className={`text-lg md:text-xl text-gray-700 mb-8 max-w-md md:max-w-lg`}>
-            We produce high-quality Black Soldier Fly Larvae as a sustainable protein
-            source, reducing environmental impact.
-          </p>
+      <div className="container mx-auto px-4 flex flex-col h-full">
+        <div className="flex-grow pt-24">
+          <div className={`max-w-xl md:max-w-2xl`}>
+            <h1 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-6`}>
+              Sustainable Insect Protein for Animal Feed
+            </h1>
+            <p className={`text-lg md:text-xl text-gray-700 mb-8 max-w-md md:max-w-lg`}>
+              We produce high-quality Black Soldier Fly Larvae as a sustainable protein
+              source, reducing environmental impact.
+            </p>
+          </div>
+        </div>
+        <div className="pb-16">
           <div className={`flex flex-col md:flex-row items-start md:items-center gap-4`}>
             <a href="#about">
               <Button size="lg" className="text-white">
