@@ -1,21 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export const Navbar = ({ onLogoHeightChange }) => {
+export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
-  const logoRef = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    if (logoRef.current) {
-      onLogoHeightChange(logoRef.current.offsetHeight);
-    }
-  }, [logoLoaded, onLogoHeightChange]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,7 +75,6 @@ export const Navbar = ({ onLogoHeightChange }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <img 
-              ref={logoRef}
               src="/lovable-uploads/b8c14063-699d-4483-9744-9ae0a4e9ab85.png" 
               alt="EntoFeed Logo" 
               className={`h-10 transition-opacity duration-700 ${
