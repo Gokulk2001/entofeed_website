@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -13,13 +12,11 @@ import { Toaster } from "@/components/ui/toaster";
 import AnimatedComponent from "@/components/ui/AnimatedComponent";
 
 const Index = () => {
-  const [logoHeight, setLogoHeight] = useState(0);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-accent to-white">
-      <Navbar onLogoHeightChange={setLogoHeight} />
+      <Navbar />
       <AnimatedComponent animation="fade-in">
-        <HeroSection logoHeight={logoHeight} />
+        <HeroSection />
       </AnimatedComponent>
       <AnimatedComponent animation="slide-in-up" delay={100}>
         <AboutSection />
