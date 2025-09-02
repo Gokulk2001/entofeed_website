@@ -27,30 +27,28 @@ export const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative py-6 md:py-20 flex flex-col justify-center min-h-screen bg-cover bg-no-repeat"
+      className="hero-background py-6 md:py-20 flex flex-col justify-between md:justify-center min-h-screen bg-cover bg-no-repeat"
+      style={{
+        backgroundPosition: isMobile ? 'calc(50% - 50px) center' : 'center center'
+      }}
     >
-      <img
-        src="/lovable-uploads/black_soldier_fly.webp"
-        alt="Black Soldier Fly"
-        className="absolute bottom-0 right-0 max-w-[240px] md:max-w-md lg:max-w-lg z-0"
-      />
-      <div className="relative container mx-auto px-4 flex flex-col justify-center h-full z-10">
+      <div className="container mx-auto px-4 flex flex-col justify-center h-full">
         <div className={`max-w-xl md:max-w-2xl`}>
-          <h1 className={`text-[22px] md:text-5xl font-bold text-gray-800 mt-[10px] mb-[12px]`}>
+          <h1 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-6`}>
             Sustainable Insect Protein for Animal Feed
           </h1>
-          <p className={`text-[16px] md:text-xl text-gray-700 mb-[40px] max-w-md md:max-w-lg`}>
+          <p className={`text-lg md:text-xl text-gray-700 mb-8 max-w-md md:max-w-lg`}>
             We produce high-quality Black Soldier Fly Larvae as a sustainable protein
             source, reducing environmental impact.
           </p>
-          <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 mt-[60px]`}>
-            <a href="#about" className="w-[80%] my-3 md:w-auto md:my-0">
-              <Button size="lg" className="text-white w-full">
+          <div className={`flex flex-col md:flex-row items-start md:items-center gap-4`}>
+            <a href="#about">
+              <Button size="lg" className="text-white">
                 Our Products
               </Button>
             </a>
-            <a href="#contact" className="w-[80%] my-3 md:w-auto md:my-0">
-              <Button size="lg" className="text-white w-full">
+            <a href="#contact">
+              <Button size="lg" className="text-white">
                 Contact Us
               </Button>
             </a>
