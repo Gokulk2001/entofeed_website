@@ -76,7 +76,7 @@ export const Navbar = () => {
           <div className="flex items-center space-x-2">
             <img 
               src="/lovable-uploads/b8c14063-699d-4483-9744-9ae0a4e9ab85.png" 
-              alt="EntoFeed Logo" 
+              alt="Entofeed Logo"
               className={`h-10 transition-opacity duration-700 ${
                 logoLoaded ? 'opacity-100' : 'opacity-0'
               } cursor-pointer`}

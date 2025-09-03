@@ -12,7 +12,7 @@ const Footer = () => {
               {/* Logo only */}
               <img 
                 src="/lovable-uploads/f18092f9-b25d-4e19-b697-f64a22b5e181.png" 
-                alt="EntoFeed Logo" 
+                alt="Entofeed Logo"
                 className="h-8 w-auto"
                 width={32}
                 height={32}
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-white/50">
-          <p>&copy; {new Date().getFullYear()} EntoFeed. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Entofeed. All rights reserved.</p>
         </div>
       </div>
     </footer>
